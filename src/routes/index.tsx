@@ -213,6 +213,46 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <section id="experience" className="bg-background py-10">
+        <div className="px-5 text-center">
+          <span className="inline-flex items-center gap-2 rounded-full bg-story px-4 py-1.5 font-script text-[22px] leading-none text-brand shadow-card">
+            <Heart className="size-3 fill-current" aria-hidden="true" />
+            The Bake 'N Love Experience
+          </span>
+          <h2 className="mt-3 font-serif text-[28px] font-bold leading-tight tracking-tight text-foreground">
+            What Makes Bake 'N Love Special?
+          </h2>
+          <div className="mx-auto mt-3 h-0.5 w-14 rounded-full bg-brand/30" />
+        </div>
+
+        <div className="mt-6 flex flex-col gap-4 px-5">
+          {experiences.map((item) => (
+            <article
+              key={item.number}
+              className="group rounded-[1.75rem] border border-border bg-card p-6 shadow-card transition-colors duration-300 hover:border-brand/30"
+            >
+              <div className="mb-5 flex items-start justify-between">
+                <div className="flex size-12 items-center justify-center rounded-2xl bg-story text-brand shadow-card transition-transform duration-300 group-hover:scale-105">
+                  <item.icon className="size-5" strokeWidth={1.8} aria-hidden="true" />
+                </div>
+                <span
+                  aria-hidden="true"
+                  className="select-none font-serif text-[40px] font-light leading-none text-dot transition-colors duration-300 group-hover:text-brand/20"
+                >
+                  {item.number}
+                </span>
+              </div>
+              <h3 className="font-serif text-[20px] font-bold uppercase tracking-wide text-foreground">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-[13.5px] leading-[1.6] text-muted-foreground">
+                {item.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
