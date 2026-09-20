@@ -66,7 +66,7 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
       alt="Bake 'N Love Cafe and Bistro"
       width={720}
       height={610}
-      className={`shrink-0 object-contain ${compact ? "h-14 w-16" : "h-[52px] w-[62px]"}`}
+      className={`shrink-0 object-contain ${compact ? "h-[68px] w-[78px]" : "h-[88px] w-[102px]"}`}
     />
   );
 }
@@ -83,14 +83,14 @@ function LeafSprig() {
 function Index() {
   return (
     <main className="mx-auto min-h-screen max-w-[430px] overflow-hidden bg-background text-foreground shadow-shell md:my-6 md:rounded-[44px]">
-      <header className="relative z-20 flex h-16 w-full items-center justify-between px-5">
+      <header className="relative z-20 flex h-[104px] w-full items-center justify-between px-6">
         <a href="#top" aria-label="Bake 'N Love home" className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <BrandMark />
         </a>
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Open navigation" className="h-10 w-10 rounded-full text-foreground hover:bg-secondary">
-              <Menu className="size-6!" strokeWidth={2.2} />
+            <Button variant="ghost" size="icon" aria-label="Open navigation" className="h-11 w-11 rounded-full text-foreground hover:bg-secondary">
+              <Menu className="size-7!" strokeWidth={2.2} />
             </Button>
           </SheetTrigger>
           <SheetContent className="w-[82%] border-l border-border bg-background px-8 pt-14">
@@ -106,38 +106,39 @@ function Index() {
         </Sheet>
       </header>
 
-      <section id="top" className="w-full">
-        <div className="px-5 pb-5 pt-5">
-          <p className="font-script text-[30px] leading-none text-script">Welcome to</p>
-          <h1 className="mt-1 font-serif text-[40px] font-bold leading-none text-foreground">Bake 'N Love</h1>
-          <p className="mt-2 text-xs font-extrabold uppercase tracking-[0.2em] text-brand">Café <span className="text-muted-foreground">&amp; Bistro</span></p>
-          <p className="mt-4 text-sm font-medium leading-6 text-foreground">
+      <section id="top" className="relative h-[380px] w-full overflow-hidden">
+        <img src={heroImage} alt="Croissant and cappuccino on a sunlit café table" width={912} height={1200} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-[52%_66%]" />
+        <div className="absolute inset-0 bg-hero-wash" />
+        <div className="relative px-6 pt-[44px]">
+          <p className="font-script text-[31px] leading-none text-script">Welcome to</p>
+          <h1 className="mt-2 font-serif text-[43px] font-bold leading-[0.95] text-foreground">Bake 'N Love</h1>
+          <p className="mt-3 text-[13px] font-extrabold uppercase tracking-[0.19em] text-brand">Café <span className="text-muted-foreground">&amp; Bistro</span></p>
+          <p className="mt-5 text-[14px] font-medium leading-[1.55] text-foreground">
             Freshly baked. Carefully crafted.<br />Good food, great coffee, better together.
           </p>
-          <div className="mt-4 grid grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] gap-3">
-            <Button asChild className="h-[42px] rounded-full bg-brand px-5 text-sm font-medium text-primary-foreground shadow-none hover:bg-brand-strong">
+          <div className="mt-4 grid grid-cols-[minmax(0,1.14fr)_minmax(0,0.86fr)] gap-3">
+            <Button asChild className="h-[44px] rounded-full bg-brand px-5 text-[14px] font-medium text-primary-foreground shadow-none hover:bg-brand-strong">
               <a href="#specials">Explore Menu <ArrowRight /></a>
             </Button>
-            <Button asChild variant="outline" className="h-[42px] rounded-full border border-border-strong bg-background px-4 text-sm font-medium shadow-none hover:bg-secondary">
+            <Button asChild variant="outline" className="h-[44px] rounded-full border border-border-strong bg-background/95 px-4 text-[14px] font-medium shadow-none hover:bg-secondary">
               <a href="#about"><MapPin /> Visit Us</a>
             </Button>
           </div>
         </div>
-        <img src={heroImage} alt="Croissant and cappuccino on a sunlit café table" width={912} height={1200} fetchPriority="high" className="h-[300px] w-full object-cover object-[52%_72%]" />
       </section>
 
-      <section id="specials" className="bg-background py-6">
+      <section id="specials" className="bg-background py-5">
         <div className="px-5">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand">Our Specials</p>
           <h2 className="mt-1 font-serif text-[30px] font-bold leading-none">Must Try</h2>
         </div>
-        <div className="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {specials.map((special) => (
-            <article key={special.title} className="w-[218px] shrink-0 snap-start overflow-hidden rounded-card border border-border bg-card shadow-card">
-              <img src={special.image} alt={special.alt} width={880} height={752} loading="lazy" className="h-[156px] w-full object-cover" />
-              <div className="min-h-[98px] px-3 py-3">
-                <h3 className="text-[15px] font-extrabold leading-tight">{special.title}</h3>
-                <p className="mt-1.5 text-[13px] leading-[1.35] text-foreground/90">{special.description}</p>
+            <article key={special.title} className="w-[145px] shrink-0 snap-start overflow-hidden rounded-card border border-border bg-card shadow-card">
+              <img src={special.image} alt={special.alt} width={880} height={752} loading="lazy" className="h-[112px] w-full object-cover" />
+              <div className="min-h-[108px] px-3 py-3">
+                <h3 className="text-[14px] font-extrabold leading-tight">{special.title}</h3>
+                <p className="mt-1.5 text-[13px] leading-[1.4] text-foreground/90">{special.description}</p>
               </div>
             </article>
           ))}
@@ -149,13 +150,13 @@ function Index() {
         </div>
       </section>
 
-      <section id="about" className="mt-1 bg-story py-7">
-        <div className="grid grid-cols-[1.15fr_0.85fr] items-end gap-3 px-5">
+      <section id="about" className="mt-1 bg-story py-6">
+        <div className="grid grid-cols-[1.12fr_0.88fr] items-end gap-2 px-5">
           <div className="relative">
             <p className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand">About Us</p>
-            <div className="mt-1 flex items-start gap-2">
+            <div className="mt-1 flex items-start gap-1">
               <h2 className="font-serif text-[30px] font-bold leading-none">Our Story</h2>
-              <div className="-mt-3 scale-60"><LeafSprig /></div>
+              <div className="-mt-4 scale-60"><LeafSprig /></div>
             </div>
             <p className="mt-3 text-sm font-medium leading-[1.45]">
               Bake 'N Love was born from a simple idea — that good food brings people together. We serve freshly baked treats, aromatic coffee and wholesome meals in a cozy, welcoming space.
@@ -165,7 +166,7 @@ function Index() {
             </Button>
           </div>
           <div className="relative w-full">
-            <img src={interiorImage} alt="Warm café interior with teal seating and wooden tables" width={1008} height={800} loading="lazy" className="h-[235px] w-full rounded-photo object-cover shadow-card" />
+            <img src={interiorImage} alt="Warm café interior with teal seating and wooden tables" width={1008} height={800} loading="lazy" className="h-[205px] w-full rounded-photo object-cover shadow-card [clip-path:polygon(18%_0,100%_0,100%_100%,0_100%,0_18%)]" />
             <div className="absolute left-1/2 top-[47%] -translate-x-1/2 -translate-y-1/2 drop-shadow-sm">
               <BrandMark compact />
             </div>
