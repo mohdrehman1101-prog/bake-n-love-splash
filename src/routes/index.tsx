@@ -8,12 +8,14 @@ import {
   HeartHandshake,
   MapPin,
   Menu,
+  Star,
 } from "lucide-react";
 
 import heroImage from "@/assets/bake-n-love-hero.jpg";
 import interiorImage from "@/assets/cafe-interior.jpg";
 import cappuccinoImage from "@/assets/cappuccino.jpg";
 import cheesecakeImage from "@/assets/cheesecake.jpg";
+import cookieDoughPieImage from "@/assets/cookie-dough-pie.jpg";
 import croissantImage from "@/assets/croissant.jpg";
 import logoAsset from "@/assets/bake-n-love-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
@@ -251,6 +253,53 @@ function Index() {
               </p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section id="signature" className="bg-background py-6">
+        <div className="mx-4 rounded-[2.25rem] border border-brand/15 bg-story p-4 shadow-card">
+          <div className="relative mb-6 overflow-hidden rounded-[1.5rem] bg-white p-2.5 shadow-card">
+            <div className="relative h-[260px] overflow-hidden rounded-[1.2rem] bg-secondary">
+              <img
+                src={cookieDoughPieImage}
+                alt="Cookie dough pie with vanilla ice cream and chocolate chips"
+                width={896}
+                height={736}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute left-3 top-3">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-background/90 px-4 py-1.5 font-script text-[20px] leading-none text-brand shadow-card">
+                  <Star className="size-3 fill-current" aria-hidden="true" /> Chef's Masterpiece
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="px-2 pb-2 text-center">
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-brand">
+              Signature Dessert
+            </span>
+            <h2 className="mt-2 font-serif text-[30px] font-bold leading-none tracking-tight text-foreground">
+              Cookie Dough Pie
+            </h2>
+            <p className="mt-3 text-[14px] leading-[1.6] text-muted-foreground">
+              Warm, indulgent cookie dough baked to perfection, topped with creamy vanilla ice cream and generous chocolate chips for a comforting dessert worth coming back for.
+            </p>
+
+            <div className="mt-6 space-y-3 border-y border-brand/20 py-5">
+              {["Cookie Dough", "Vanilla Ice Cream", "Chocolate Chips"].map((item) => (
+                <div key={item} className="flex items-center justify-center gap-3 text-[12.5px] font-bold uppercase tracking-[0.12em] text-foreground">
+                  <span className="size-2 rounded-full bg-brand" aria-hidden="true" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+
+            <Button asChild className="mt-6 h-[44px] rounded-full bg-brand px-8 text-[14px] font-semibold text-primary-foreground shadow-none hover:bg-brand-strong">
+              <a href="#specials">View Full Menu <ArrowRight /></a>
+            </Button>
+          </div>
         </div>
       </section>
     </main>
