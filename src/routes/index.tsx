@@ -106,10 +106,10 @@ function Index() {
         </Sheet>
       </header>
 
-      <section id="top" className="relative h-[405px] w-full overflow-hidden">
+      <section id="top" className="relative h-[380px] w-full overflow-hidden">
         <img src={heroImage} alt="Croissant and cappuccino on a sunlit café table" width={912} height={1200} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-[52%_66%]" />
         <div className="absolute inset-0 bg-hero-wash" />
-        <div className="relative px-6 pt-[52px]">
+        <div className="relative px-6 pt-[44px]">
           <p className="font-script text-[31px] leading-none text-script">Welcome to</p>
           <h1 className="mt-2 font-serif text-[43px] font-bold leading-[0.95] text-foreground">Bake 'N Love</h1>
           <p className="mt-3 text-[13px] font-extrabold uppercase tracking-[0.19em] text-brand">Café <span className="text-muted-foreground">&amp; Bistro</span></p>
@@ -134,11 +134,11 @@ function Index() {
         </div>
         <div className="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {specials.map((special) => (
-            <article key={special.title} className="w-[218px] shrink-0 snap-start overflow-hidden rounded-card border border-border bg-card shadow-card">
-              <img src={special.image} alt={special.alt} width={880} height={752} loading="lazy" className="h-[140px] w-full object-cover" />
-              <div className="min-h-[94px] px-3 py-3">
-                <h3 className="text-[15px] font-extrabold leading-tight">{special.title}</h3>
-                <p className="mt-1.5 text-[13px] leading-[1.35] text-foreground/90">{special.description}</p>
+            <article key={special.title} className="w-[145px] shrink-0 snap-start overflow-hidden rounded-card border border-border bg-card shadow-card">
+              <img src={special.image} alt={special.alt} width={880} height={752} loading="lazy" className="h-[112px] w-full object-cover" />
+              <div className="min-h-[108px] px-3 py-3">
+                <h3 className="text-[14px] font-extrabold leading-tight">{special.title}</h3>
+                <p className="mt-1.5 text-[13px] leading-[1.4] text-foreground/90">{special.description}</p>
               </div>
             </article>
           ))}
