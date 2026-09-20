@@ -1,5 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, MapPin, Menu } from "lucide-react";
+import {
+  Armchair,
+  ArrowRight,
+  CakeSlice,
+  Coffee,
+  Heart,
+  HeartHandshake,
+  MapPin,
+  Menu,
+} from "lucide-react";
 
 import heroImage from "@/assets/bake-n-love-hero.jpg";
 import interiorImage from "@/assets/cafe-interior.jpg";
@@ -37,6 +46,37 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
+
+const experiences = [
+  {
+    number: "01",
+    icon: Coffee,
+    title: "Artisan Coffee",
+    description:
+      "Carefully selected beans, expertly brewed to deliver rich flavour and a memorable experience.",
+  },
+  {
+    number: "02",
+    icon: CakeSlice,
+    title: "Curated Flavours",
+    description:
+      "Handcrafted dishes and beverages prepared fresh with quality ingredients and thoughtful presentation.",
+  },
+  {
+    number: "03",
+    icon: Armchair,
+    title: "Premium Ambience",
+    description:
+      "Beautiful interiors designed for relaxing conversations, productive meetings and special celebrations.",
+  },
+  {
+    number: "04",
+    icon: HeartHandshake,
+    title: "Genuine Hospitality",
+    description:
+      "Attentive service and welcoming experiences that make every visit feel comfortable and special.",
+  },
+];
 
 const specials = [
   {
