@@ -1,14 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, type ChangeEvent } from "react";
 import {
   Armchair,
   ArrowRight,
   CakeSlice,
+  CalendarDays,
+  Check,
+  ChevronDown,
+  Clock,
   Coffee,
   Heart,
   HeartHandshake,
   MapPin,
   Menu,
+  Phone,
   Star,
+  User,
+  Users,
 } from "lucide-react";
 
 import heroImage from "@/assets/bake-n-love-hero.jpg";
@@ -16,6 +24,8 @@ import interiorImage from "@/assets/cafe-interior.jpg";
 import cappuccinoImage from "@/assets/cappuccino.jpg";
 import cheesecakeImage from "@/assets/cheesecake.jpg";
 import cookieDoughPieImage from "@/assets/cookie-dough-pie.jpg";
+import ananyaAvatar from "@/assets/avatar-ananya.jpg";
+import rohanAvatar from "@/assets/avatar-rohan.jpg";
 import croissantImage from "@/assets/croissant.jpg";
 import logoAsset from "@/assets/bake-n-love-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
@@ -101,6 +111,46 @@ const specials = [
   },
 ];
 
+// ⚙️ BOOKING CONFIG — the restaurant's WhatsApp number, in international format with digits only.
+// Example: "919876543210" for +91 98765 43210. Change this one value; the whole site uses it.
+const RESTAURANT_WHATSAPP_NUMBER = "919876543210";
+
+const reviews = [
+  {
+    name: "Ananya Sharma",
+    time: "2 weeks ago",
+    avatar: ananyaAvatar,
+    text: "“The desserts are just amazing! Loved the cozy ambience and friendly staff. Definitely coming back soon!”",
+  },
+  {
+    name: "Rohan Verma",
+    time: "1 month ago",
+    avatar: rohanAvatar,
+    text: "“Best café in town! The cookie dough pie is a must-try. Everything was perfect — from taste to presentation.”",
+  },
+];
+
+function Stars({ className = "size-3.5" }: { className?: string }) {
+  return (
+    <div className="flex gap-0.5" aria-label="Rated 5 out of 5 stars">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <Star key={index} className={`${className} fill-star text-star`} aria-hidden="true" />
+      ))}
+    </div>
+  );
+}
+
+function GoogleG({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+    </svg>
+  );
+}
+
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <img
@@ -113,9 +163,9 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function LeafSprig() {
+function LeafSprig({ className = "h-20 w-12 text-botanical" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 52 92" className="h-20 w-12 text-botanical" aria-hidden="true">
+    <svg viewBox="0 0 52 92" className={className} aria-hidden="true">
       <path d="M22 87C19 58 23 31 39 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       <path d="M26 53C13 50 7 42 7 32c11 2 18 8 19 21ZM30 38c1-12 7-21 17-25 0 11-5 20-17 25ZM22 67C11 66 5 60 3 51c10 0 17 5 19 16ZM34 24c-1-9 2-17 10-22 2 9-1 17-10 22Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
     </svg>
@@ -123,6 +173,49 @@ function LeafSprig() {
 }
 
 function Index() {
+  const [booking, setBooking] = useState({ date: "", time: "", guests: "1", name: "", phone: "" });
+  const [notice, setNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const updateBooking =
+    (key: keyof typeof booking) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+      setBooking((current) => ({ ...current, [key]: event.target.value }));
+
+  const guestLabel = `${booking.guests} ${booking.guests === "1" ? "guest" : "guests"}`;
+
+  function handleReserve() {
+    const name = booking.name.trim();
+    const phone = booking.phone.trim();
+    if (!booking.date || !booking.time || !name || !phone) {
+      setNotice({ type: "error", text: "Please fill in all the fields to reserve your table." });
+      return;
+    }
+    if (phone.replace(/\D/g, "").length < 7) {
+      setNotice({ type: "error", text: "Please enter a valid phone number." });
+      return;
+    }
+    const message = [
+      "🍰 New Table Booking",
+      "",
+      `📅 Date: ${new Date(`${booking.date}T00:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}`,
+      `⏰ Time: ${new Date(`2000-01-01T${booking.time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}`,
+      `👥 Guests: ${guestLabel}`,
+      `👤 Name: ${name}`,
+      `📞 Phone: ${phone}`,
+      "",
+      "Please confirm this table booking.",
+    ].join("\n");
+    window.open(
+      `https://wa.me/${RESTAURANT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+    setNotice({
+      type: "success",
+      text: "Your booking request is ready on WhatsApp. Please send the message to confirm your reservation.",
+    });
+  }
+
   return (
     <main className="mx-auto min-h-screen max-w-[430px] overflow-hidden bg-background text-foreground shadow-shell md:my-6 md:rounded-[44px]">
       <header className="relative z-20 flex h-[104px] w-full items-center justify-between px-6">
@@ -299,6 +392,231 @@ function Index() {
             <Button asChild className="mt-6 h-[44px] rounded-full bg-brand px-8 text-[14px] font-semibold text-primary-foreground shadow-none hover:bg-brand-strong">
               <a href="#specials">View Full Menu <ArrowRight /></a>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      <section id="booking" className="bg-background py-6">
+        <div className="mx-4 rounded-[2.25rem] border border-brand/20 bg-story p-2 shadow-card">
+          <div className="relative overflow-hidden rounded-[1.9rem] bg-card px-5 pb-7 pt-8">
+            <LeafSprig className="absolute -left-1 top-3 h-14 w-8 -rotate-[35deg] text-brand/30" />
+            <LeafSprig className="absolute -right-1 bottom-3 h-14 w-8 rotate-[145deg] text-brand/30" />
+
+            <div className="relative text-center">
+              <p className="flex items-center justify-center gap-2 font-script text-[26px] leading-none text-brand">
+                <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+                Save Your Table
+                <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+              </p>
+              <h2 className="mt-1.5 font-serif text-[34px] font-bold leading-none text-foreground">Table Booking</h2>
+              <p className="mx-auto mt-2.5 max-w-[300px] text-[13.5px] leading-[1.5] text-muted-foreground">
+                Reserve your favorite table and enjoy a beautiful moment with Bake 'N Love.
+              </p>
+            </div>
+
+            <div className="relative mt-5">
+              <div className="grid grid-cols-3 gap-2.5">
+                <label className="flex min-w-0 items-center gap-1.5 rounded-[0.9rem] border border-brand/25 bg-background px-2.5 py-2 shadow-card">
+                  <CalendarDays className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Date</span>
+                    <input
+                      type="date"
+                      required
+                      value={booking.date}
+                      onChange={updateBooking("date")}
+                      aria-label="Select date"
+                      className="w-full bg-transparent text-[11px] font-medium outline-none [color-scheme:light] invalid:text-muted-foreground valid:text-foreground"
+                    />
+                  </span>
+                </label>
+                <label className="flex min-w-0 items-center gap-1.5 rounded-[0.9rem] border border-brand/25 bg-background px-2.5 py-2 shadow-card">
+                  <Clock className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Time</span>
+                    <input
+                      type="time"
+                      required
+                      value={booking.time}
+                      onChange={updateBooking("time")}
+                      aria-label="Select time"
+                      className="w-full bg-transparent text-[11px] font-medium outline-none [color-scheme:light] invalid:text-muted-foreground valid:text-foreground"
+                    />
+                  </span>
+                </label>
+                <label className="flex min-w-0 items-center gap-1.5 rounded-[0.9rem] border border-brand/25 bg-background px-2.5 py-2 shadow-card">
+                  <Users className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Guests</span>
+                    <span className="relative flex items-center">
+                      <select
+                        value={booking.guests}
+                        onChange={updateBooking("guests")}
+                        aria-label="Number of guests"
+                        className="w-full appearance-none bg-transparent text-[11px] font-medium text-foreground outline-none"
+                      >
+                        {Array.from({ length: 12 }).map((_, index) => (
+                          <option key={index + 1} value={index + 1}>
+                            {index + 1} {index === 0 ? "guest" : "guests"}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute right-0 size-3 text-muted-foreground" aria-hidden="true" />
+                    </span>
+                  </span>
+                </label>
+              </div>
+
+              <div className="mt-2.5 grid grid-cols-2 gap-2.5">
+                <label className="flex items-center gap-2 rounded-[0.9rem] border border-brand/25 bg-background px-3 py-2 shadow-card">
+                  <User className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Your Name</span>
+                    <input
+                      type="text"
+                      value={booking.name}
+                      onChange={updateBooking("name")}
+                      placeholder="Enter your name"
+                      maxLength={60}
+                      aria-label="Your name"
+                      className="w-full bg-transparent text-[12px] font-medium text-foreground outline-none placeholder:font-normal placeholder:text-muted-foreground"
+                    />
+                  </span>
+                </label>
+                <label className="flex items-center gap-2 rounded-[0.9rem] border border-brand/25 bg-background px-3 py-2 shadow-card">
+                  <Phone className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Phone Number</span>
+                    <input
+                      type="tel"
+                      inputMode="tel"
+                      value={booking.phone}
+                      onChange={updateBooking("phone")}
+                      placeholder="+91 98765 43210"
+                      maxLength={20}
+                      aria-label="Phone number"
+                      className="w-full bg-transparent text-[12px] font-medium text-foreground outline-none placeholder:font-normal placeholder:text-muted-foreground"
+                    />
+                  </span>
+                </label>
+              </div>
+
+              <Button
+                onClick={handleReserve}
+                className="mt-4 h-[48px] w-full rounded-full bg-brand text-[15px] font-semibold text-primary-foreground shadow-md hover:bg-brand-strong"
+              >
+                Reserve My Table <ArrowRight />
+              </Button>
+
+              {notice ? (
+                <p
+                  role="status"
+                  className={`mt-3 text-center text-[12.5px] font-semibold leading-[1.45] ${notice.type === "success" ? "text-brand-strong" : "text-destructive"}`}
+                >
+                  {notice.text}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="relative mt-6 text-center">
+              <p className="flex items-center justify-center gap-2 font-script text-[19px] leading-none text-brand">
+                <span className="h-px w-7 rounded-full bg-brand/30" aria-hidden="true" />
+                Good food tastes better when shared.
+                <span className="h-px w-7 rounded-full bg-brand/30" aria-hidden="true" />
+              </p>
+              <Heart className="mx-auto mt-2.5 size-3.5 fill-brand text-brand" aria-hidden="true" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews" className="bg-background pb-9 pt-1">
+        <div className="mx-4 rounded-[2.25rem] border border-brand/20 bg-story p-2 shadow-card">
+          <div className="relative overflow-hidden rounded-[1.9rem] bg-card px-5 pb-7 pt-8">
+            <LeafSprig className="absolute -left-1 bottom-4 h-14 w-8 rotate-[35deg] text-brand/30" />
+            <LeafSprig className="absolute -right-1 bottom-6 h-12 w-7 rotate-[145deg] text-brand/30" />
+
+            <div className="relative text-center">
+              <p className="flex items-center justify-center gap-2 font-script text-[26px] leading-none text-brand">
+                <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+                What Our Customers Say
+                <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+              </p>
+              <h2 className="mt-1.5 font-serif text-[34px] font-bold leading-none text-foreground">Google Reviews</h2>
+              <p className="mx-auto mt-2.5 max-w-[300px] text-[13.5px] leading-[1.5] text-muted-foreground">
+                Real people. Real moments. We're so grateful for all the love and support!
+              </p>
+            </div>
+
+            <div className="relative mt-6 grid grid-cols-2 items-center">
+              <div className="text-center">
+                <p className="font-serif text-[40px] font-bold leading-none text-foreground">4.8</p>
+                <div className="mt-2 flex justify-center">
+                  <Stars className="size-4" />
+                </div>
+                <p className="mt-2 text-[11.5px] font-medium text-muted-foreground">Based on 124 reviews</p>
+              </div>
+              <div className="border-l border-brand/25 py-1 text-center">
+                <div className="flex items-center justify-center gap-2">
+                  <GoogleG className="size-7" />
+                  <span className="text-[26px] font-medium leading-none tracking-tight">
+                    <span className="text-[#4285F4]">G</span>
+                    <span className="text-[#EA4335]">o</span>
+                    <span className="text-[#FBBC05]">o</span>
+                    <span className="text-[#4285F4]">g</span>
+                    <span className="text-[#34A853]">l</span>
+                    <span className="text-[#EA4335]">e</span>
+                  </span>
+                </div>
+                <p className="mt-2 flex items-center justify-center gap-1.5 text-[12px] font-semibold text-foreground">
+                  Verified Reviews
+                  <span className="flex size-4 items-center justify-center rounded-full bg-[#4285F4]">
+                    <Check className="size-2.5 text-white" strokeWidth={4} aria-hidden="true" />
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="relative mt-5 grid grid-cols-2 gap-3">
+              {reviews.map((review) => (
+                <article key={review.name} className="rounded-[1.1rem] border border-brand/15 bg-background p-3.5 shadow-card">
+                  <div className="flex items-center gap-2.5">
+                    <img
+                      src={review.avatar}
+                      alt={review.name}
+                      width={816}
+                      height={816}
+                      loading="lazy"
+                      className="size-10 shrink-0 rounded-full object-cover"
+                    />
+                    <div className="min-w-0">
+                      <h3 className="truncate text-[12.5px] font-extrabold leading-tight text-foreground">{review.name}</h3>
+                      <p className="text-[10.5px] text-muted-foreground">{review.time}</p>
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    <Stars className="size-3" />
+                  </div>
+                  <p className="mt-2 text-[12px] leading-[1.55] text-foreground/90">{review.text}</p>
+                </article>
+              ))}
+            </div>
+
+            <div className="relative mt-6 flex justify-center">
+              <Button
+                asChild
+                variant="outline"
+                className="h-10 rounded-full border border-border-strong bg-background px-6 text-[13px] font-semibold shadow-card hover:bg-secondary"
+              >
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Bake%20%27N%20Love%20Cafe%20%26%20Bistro"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Read More Reviews <ArrowRight />
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
