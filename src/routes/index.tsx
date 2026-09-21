@@ -1,14 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, type ChangeEvent } from "react";
 import {
   Armchair,
   ArrowRight,
   CakeSlice,
+  CalendarDays,
+  Check,
+  ChevronDown,
+  Clock,
   Coffee,
   Heart,
   HeartHandshake,
   MapPin,
   Menu,
+  Phone,
   Star,
+  User,
+  Users,
 } from "lucide-react";
 
 import heroImage from "@/assets/bake-n-love-hero.jpg";
@@ -16,6 +24,8 @@ import interiorImage from "@/assets/cafe-interior.jpg";
 import cappuccinoImage from "@/assets/cappuccino.jpg";
 import cheesecakeImage from "@/assets/cheesecake.jpg";
 import cookieDoughPieImage from "@/assets/cookie-dough-pie.jpg";
+import ananyaAvatar from "@/assets/avatar-ananya.jpg";
+import rohanAvatar from "@/assets/avatar-rohan.jpg";
 import croissantImage from "@/assets/croissant.jpg";
 import logoAsset from "@/assets/bake-n-love-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
@@ -101,6 +111,46 @@ const specials = [
   },
 ];
 
+// ⚙️ BOOKING CONFIG — the restaurant's WhatsApp number, in international format with digits only.
+// Example: "919876543210" for +91 98765 43210. Change this one value; the whole site uses it.
+const RESTAURANT_WHATSAPP_NUMBER = "919876543210";
+
+const reviews = [
+  {
+    name: "Ananya Sharma",
+    time: "2 weeks ago",
+    avatar: ananyaAvatar,
+    text: "“The desserts are just amazing! Loved the cozy ambience and friendly staff. Definitely coming back soon!”",
+  },
+  {
+    name: "Rohan Verma",
+    time: "1 month ago",
+    avatar: rohanAvatar,
+    text: "“Best café in town! The cookie dough pie is a must-try. Everything was perfect — from taste to presentation.”",
+  },
+];
+
+function Stars({ className = "size-3.5" }: { className?: string }) {
+  return (
+    <div className="flex gap-0.5" aria-label="Rated 5 out of 5 stars">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <Star key={index} className={`${className} fill-star text-star`} aria-hidden="true" />
+      ))}
+    </div>
+  );
+}
+
+function GoogleG({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+    </svg>
+  );
+}
+
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <img
@@ -113,9 +163,9 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function LeafSprig() {
+function LeafSprig({ className = "h-20 w-12 text-botanical" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 52 92" className="h-20 w-12 text-botanical" aria-hidden="true">
+    <svg viewBox="0 0 52 92" className={className} aria-hidden="true">
       <path d="M22 87C19 58 23 31 39 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       <path d="M26 53C13 50 7 42 7 32c11 2 18 8 19 21ZM30 38c1-12 7-21 17-25 0 11-5 20-17 25ZM22 67C11 66 5 60 3 51c10 0 17 5 19 16ZM34 24c-1-9 2-17 10-22 2 9-1 17-10 22Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
     </svg>
@@ -123,6 +173,49 @@ function LeafSprig() {
 }
 
 function Index() {
+  const [booking, setBooking] = useState({ date: "", time: "", guests: "1", name: "", phone: "" });
+  const [notice, setNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const updateBooking =
+    (key: keyof typeof booking) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+      setBooking((current) => ({ ...current, [key]: event.target.value }));
+
+  const guestLabel = `${booking.guests} ${booking.guests === "1" ? "guest" : "guests"}`;
+
+  function handleReserve() {
+    const name = booking.name.trim();
+    const phone = booking.phone.trim();
+    if (!booking.date || !booking.time || !name || !phone) {
+      setNotice({ type: "error", text: "Please fill in all the fields to reserve your table." });
+      return;
+    }
+    if (phone.replace(/\D/g, "").length < 7) {
+      setNotice({ type: "error", text: "Please enter a valid phone number." });
+      return;
+    }
+    const message = [
+      "🍰 New Table Booking",
+      "",
+      `📅 Date: ${new Date(`${booking.date}T00:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}`,
+      `⏰ Time: ${new Date(`2000-01-01T${booking.time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}`,
+      `👥 Guests: ${guestLabel}`,
+      `👤 Name: ${name}`,
+      `📞 Phone: ${phone}`,
+      "",
+      "Please confirm this table booking.",
+    ].join("\n");
+    window.open(
+      `https://wa.me/${RESTAURANT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+    setNotice({
+      type: "success",
+      text: "Your booking request is ready on WhatsApp. Please send the message to confirm your reservation.",
+    });
+  }
+
   return (
     <main className="mx-auto min-h-screen max-w-[430px] overflow-hidden bg-background text-foreground shadow-shell md:my-6 md:rounded-[44px]">
       <header className="relative z-20 flex h-[104px] w-full items-center justify-between px-6">
