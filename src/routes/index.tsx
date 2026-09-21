@@ -395,6 +395,231 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <section id="booking" className="bg-background py-6">
+        <div className="mx-4 rounded-[2.25rem] border border-brand/20 bg-story p-2 shadow-card">
+          <div className="relative overflow-hidden rounded-[1.9rem] bg-card px-5 pb-7 pt-8">
+            <LeafSprig className="absolute -left-1 top-3 h-14 w-8 -rotate-[35deg] text-brand/30" />
+            <LeafSprig className="absolute -right-1 bottom-3 h-14 w-8 rotate-[145deg] text-brand/30" />
+
+            <div className="relative text-center">
+              <p className="flex items-center justify-center gap-2 font-script text-[26px] leading-none text-brand">
+                <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+                Save Your Table
+                <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+              </p>
+              <h2 className="mt-1.5 font-serif text-[34px] font-bold leading-none text-foreground">Table Booking</h2>
+              <p className="mx-auto mt-2.5 max-w-[300px] text-[13.5px] leading-[1.5] text-muted-foreground">
+                Reserve your favorite table and enjoy a beautiful moment with Bake 'N Love.
+              </p>
+            </div>
+
+            <div className="relative mt-5">
+              <div className="grid grid-cols-3 gap-2.5">
+                <label className="flex min-w-0 items-center gap-1.5 rounded-[0.9rem] border border-brand/25 bg-background px-2.5 py-2 shadow-card">
+                  <CalendarDays className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Date</span>
+                    <input
+                      type="date"
+                      required
+                      value={booking.date}
+                      onChange={updateBooking("date")}
+                      aria-label="Select date"
+                      className="w-full bg-transparent text-[11px] font-medium outline-none [color-scheme:light] invalid:text-muted-foreground valid:text-foreground"
+                    />
+                  </span>
+                </label>
+                <label className="flex min-w-0 items-center gap-1.5 rounded-[0.9rem] border border-brand/25 bg-background px-2.5 py-2 shadow-card">
+                  <Clock className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Time</span>
+                    <input
+                      type="time"
+                      required
+                      value={booking.time}
+                      onChange={updateBooking("time")}
+                      aria-label="Select time"
+                      className="w-full bg-transparent text-[11px] font-medium outline-none [color-scheme:light] invalid:text-muted-foreground valid:text-foreground"
+                    />
+                  </span>
+                </label>
+                <label className="flex min-w-0 items-center gap-1.5 rounded-[0.9rem] border border-brand/25 bg-background px-2.5 py-2 shadow-card">
+                  <Users className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Guests</span>
+                    <span className="relative flex items-center">
+                      <select
+                        value={booking.guests}
+                        onChange={updateBooking("guests")}
+                        aria-label="Number of guests"
+                        className="w-full appearance-none bg-transparent text-[11px] font-medium text-foreground outline-none"
+                      >
+                        {Array.from({ length: 12 }).map((_, index) => (
+                          <option key={index + 1} value={index + 1}>
+                            {index + 1} {index === 0 ? "guest" : "guests"}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute right-0 size-3 text-muted-foreground" aria-hidden="true" />
+                    </span>
+                  </span>
+                </label>
+              </div>
+
+              <div className="mt-2.5 grid grid-cols-2 gap-2.5">
+                <label className="flex items-center gap-2 rounded-[0.9rem] border border-brand/25 bg-background px-3 py-2 shadow-card">
+                  <User className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Your Name</span>
+                    <input
+                      type="text"
+                      value={booking.name}
+                      onChange={updateBooking("name")}
+                      placeholder="Enter your name"
+                      maxLength={60}
+                      aria-label="Your name"
+                      className="w-full bg-transparent text-[12px] font-medium text-foreground outline-none placeholder:font-normal placeholder:text-muted-foreground"
+                    />
+                  </span>
+                </label>
+                <label className="flex items-center gap-2 rounded-[0.9rem] border border-brand/25 bg-background px-3 py-2 shadow-card">
+                  <Phone className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-extrabold leading-tight text-foreground">Phone Number</span>
+                    <input
+                      type="tel"
+                      inputMode="tel"
+                      value={booking.phone}
+                      onChange={updateBooking("phone")}
+                      placeholder="+91 98765 43210"
+                      maxLength={20}
+                      aria-label="Phone number"
+                      className="w-full bg-transparent text-[12px] font-medium text-foreground outline-none placeholder:font-normal placeholder:text-muted-foreground"
+                    />
+                  </span>
+                </label>
+              </div>
+
+              <Button
+                onClick={handleReserve}
+                className="mt-4 h-[48px] w-full rounded-full bg-brand text-[15px] font-semibold text-primary-foreground shadow-md hover:bg-brand-strong"
+              >
+                Reserve My Table <ArrowRight />
+              </Button>
+
+              {notice ? (
+                <p
+                  role="status"
+                  className={`mt-3 text-center text-[12.5px] font-semibold leading-[1.45] ${notice.type === "success" ? "text-brand-strong" : "text-destructive"}`}
+                >
+                  {notice.text}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="relative mt-6 text-center">
+              <p className="flex items-center justify-center gap-2 font-script text-[19px] leading-none text-brand">
+                <span className="h-px w-7 rounded-full bg-brand/30" aria-hidden="true" />
+                Good food tastes better when shared.
+                <span className="h-px w-7 rounded-full bg-brand/30" aria-hidden="true" />
+              </p>
+              <Heart className="mx-auto mt-2.5 size-3.5 fill-brand text-brand" aria-hidden="true" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews" className="bg-background pb-9 pt-1">
+        <div className="mx-4 rounded-[2.25rem] border border-brand/20 bg-story p-2 shadow-card">
+          <div className="relative overflow-hidden rounded-[1.9rem] bg-card px-5 pb-7 pt-8">
+            <LeafSprig className="absolute -left-1 bottom-4 h-14 w-8 rotate-[35deg] text-brand/30" />
+            <LeafSprig className="absolute -right-1 bottom-6 h-12 w-7 rotate-[145deg] text-brand/30" />
+
+            <div className="relative text-center">
+              <p className="flex items-center justify-center gap-2 font-script text-[26px] leading-none text-brand">
+                <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+                What Our Customers Say
+                <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+              </p>
+              <h2 className="mt-1.5 font-serif text-[34px] font-bold leading-none text-foreground">Google Reviews</h2>
+              <p className="mx-auto mt-2.5 max-w-[300px] text-[13.5px] leading-[1.5] text-muted-foreground">
+                Real people. Real moments. We're so grateful for all the love and support!
+              </p>
+            </div>
+
+            <div className="relative mt-6 grid grid-cols-2 items-center">
+              <div className="text-center">
+                <p className="font-serif text-[40px] font-bold leading-none text-foreground">4.8</p>
+                <div className="mt-2 flex justify-center">
+                  <Stars className="size-4" />
+                </div>
+                <p className="mt-2 text-[11.5px] font-medium text-muted-foreground">Based on 124 reviews</p>
+              </div>
+              <div className="border-l border-brand/25 py-1 text-center">
+                <div className="flex items-center justify-center gap-2">
+                  <GoogleG className="size-7" />
+                  <span className="text-[26px] font-medium leading-none tracking-tight">
+                    <span className="text-[#4285F4]">G</span>
+                    <span className="text-[#EA4335]">o</span>
+                    <span className="text-[#FBBC05]">o</span>
+                    <span className="text-[#4285F4]">g</span>
+                    <span className="text-[#34A853]">l</span>
+                    <span className="text-[#EA4335]">e</span>
+                  </span>
+                </div>
+                <p className="mt-2 flex items-center justify-center gap-1.5 text-[12px] font-semibold text-foreground">
+                  Verified Reviews
+                  <span className="flex size-4 items-center justify-center rounded-full bg-[#4285F4]">
+                    <Check className="size-2.5 text-white" strokeWidth={4} aria-hidden="true" />
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="relative mt-5 grid grid-cols-2 gap-3">
+              {reviews.map((review) => (
+                <article key={review.name} className="rounded-[1.1rem] border border-brand/15 bg-background p-3.5 shadow-card">
+                  <div className="flex items-center gap-2.5">
+                    <img
+                      src={review.avatar}
+                      alt={review.name}
+                      width={816}
+                      height={816}
+                      loading="lazy"
+                      className="size-10 shrink-0 rounded-full object-cover"
+                    />
+                    <div className="min-w-0">
+                      <h3 className="truncate text-[12.5px] font-extrabold leading-tight text-foreground">{review.name}</h3>
+                      <p className="text-[10.5px] text-muted-foreground">{review.time}</p>
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    <Stars className="size-3" />
+                  </div>
+                  <p className="mt-2 text-[12px] leading-[1.55] text-foreground/90">{review.text}</p>
+                </article>
+              ))}
+            </div>
+
+            <div className="relative mt-6 flex justify-center">
+              <Button
+                asChild
+                variant="outline"
+                className="h-10 rounded-full border border-border-strong bg-background px-6 text-[13px] font-semibold shadow-card hover:bg-secondary"
+              >
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Bake%20%27N%20Love%20Cafe%20%26%20Bistro"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Read More Reviews <ArrowRight />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
