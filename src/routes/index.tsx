@@ -698,6 +698,163 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <footer id="contact" className="border-t border-brand/20 bg-story pb-8 pt-9">
+        <div className="px-5 text-center">
+          <p className="flex items-center justify-center gap-2 font-script text-[26px] leading-none text-brand">
+            <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+            Stay in Touch
+            <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
+          </p>
+          <h2 className="mt-1.5 font-serif text-[34px] font-bold leading-none text-foreground">Connect With Us</h2>
+          <p className="mx-auto mt-2.5 max-w-[300px] text-[13.5px] leading-[1.5] text-muted-foreground">
+            Come by for a warm cup of coffee — we'd love to meet you!
+          </p>
+        </div>
+
+        <div className="relative mx-4 mt-6 overflow-hidden rounded-[1.9rem] border border-brand/20 bg-card p-5 shadow-card">
+          <LeafSprig className="absolute -right-1 top-3 h-12 w-7 rotate-[35deg] text-brand/25" />
+          <ul className="relative space-y-4">
+            <li className="flex items-start gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-story text-brand shadow-card">
+                <MapPin className="size-4" strokeWidth={2.2} aria-hidden="true" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-brand">Address</span>
+                <span className="mt-0.5 block text-[13px] font-medium leading-[1.45] text-foreground">{RESTAURANT_ADDRESS}</span>
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-story text-brand shadow-card">
+                <Phone className="size-4" strokeWidth={2.2} aria-hidden="true" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-brand">Phone</span>
+                <a href={`tel:${RESTAURANT_PHONE_TEL}`} className="mt-0.5 block text-[13px] font-medium leading-[1.45] text-foreground underline-offset-2 hover:underline">
+                  {RESTAURANT_PHONE_DISPLAY}
+                </a>
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-story text-brand shadow-card">
+                <Mail className="size-4" strokeWidth={2.2} aria-hidden="true" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-brand">Email</span>
+                <a href={`mailto:${RESTAURANT_EMAIL}`} className="mt-0.5 block break-words text-[13px] font-medium leading-[1.45] text-foreground underline-offset-2 hover:underline">
+                  {RESTAURANT_EMAIL}
+                </a>
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-story text-brand shadow-card">
+                <Clock className="size-4" strokeWidth={2.2} aria-hidden="true" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-brand">Opening Hours</span>
+                {OPENING_HOURS.map((hours) => (
+                  <span key={hours.days} className="mt-0.5 block text-[13px] font-medium leading-[1.45] text-foreground">
+                    {hours.days}: {hours.time}
+                  </span>
+                ))}
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="mx-4 mt-4 rounded-[1.9rem] border border-brand/20 bg-card p-2.5 shadow-card">
+          <div className="overflow-hidden rounded-[1.4rem] border border-brand/15 bg-secondary">
+            <iframe
+              src={MAPS_EMBED_URL}
+              title="Bake 'N Love Cafe & Bistro on Google Maps"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              aria-label="Map showing the cafe location"
+              className="block h-[190px] w-full border-0"
+            />
+          </div>
+          <Button asChild className="mt-3 h-11 w-full rounded-full bg-brand text-[14px] font-semibold text-primary-foreground shadow-none hover:bg-brand-strong">
+            <a href={MAPS_DIRECTIONS_URL} target="_blank" rel="noopener noreferrer">
+              Get Directions <ArrowRight />
+            </a>
+          </Button>
+        </div>
+
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <a
+            href={SOCIAL_LINKS.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Bake 'N Love on Instagram"
+            className="flex size-11 items-center justify-center rounded-full border border-brand/25 bg-card text-brand shadow-card transition-colors hover:bg-secondary hover:text-brand-strong"
+          >
+            <Instagram className="size-5" strokeWidth={1.9} aria-hidden="true" />
+          </a>
+          <a
+            href={SOCIAL_LINKS.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Bake 'N Love on Facebook"
+            className="flex size-11 items-center justify-center rounded-full border border-brand/25 bg-card text-brand shadow-card transition-colors hover:bg-secondary hover:text-brand-strong"
+          >
+            <Facebook className="size-5" strokeWidth={1.9} aria-hidden="true" />
+          </a>
+          <a
+            href={`https://wa.me/${RESTAURANT_WHATSAPP_NUMBER}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat with Bake 'N Love on WhatsApp"
+            className="flex size-11 items-center justify-center rounded-full border border-brand/25 bg-card text-brand shadow-card transition-colors hover:bg-secondary hover:text-brand-strong"
+          >
+            <WhatsAppIcon className="size-5" />
+          </a>
+        </div>
+
+        <form onSubmit={handleSubscribe} className="mx-4 mt-6 rounded-[1.9rem] border border-brand/20 bg-card p-5 shadow-card" noValidate>
+          <p className="text-center font-script text-[24px] leading-none text-brand">Sweet News, Fresh Bakes</p>
+          <p className="mx-auto mt-2 max-w-[280px] text-center text-[12.5px] leading-[1.5] text-muted-foreground">
+            Join our newsletter for seasonal specials, new desserts and cafe updates.
+          </p>
+          <div className="mt-4 flex gap-2">
+            <label className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-brand/25 bg-background px-4 shadow-card">
+              <Mail className="size-4 shrink-0 text-brand" aria-hidden="true" />
+              <input
+                type="email"
+                suppressHydrationWarning
+                value={newsletterEmail}
+                onChange={(event) => setNewsletterEmail(event.target.value)}
+                placeholder="Your email address"
+                maxLength={80}
+                aria-label="Email address"
+                className="w-full bg-transparent py-3 text-[13px] font-medium text-foreground outline-none placeholder:font-normal placeholder:text-muted-foreground"
+              />
+            </label>
+            <Button type="submit" className="h-[46px] shrink-0 rounded-full bg-brand px-5 text-[13.5px] font-semibold text-primary-foreground shadow-none hover:bg-brand-strong">
+              Subscribe <Send className="size-4" aria-hidden="true" />
+            </Button>
+          </div>
+          {newsletterStatus ? (
+            <p
+              role="status"
+              className={`mt-3 text-center text-[12px] font-semibold leading-[1.45] ${newsletterStatus.type === "success" ? "text-brand-strong" : "text-destructive"}`}
+            >
+              {newsletterStatus.text}
+            </p>
+          ) : null}
+        </form>
+
+        <div className="mt-8 flex flex-col items-center gap-3 px-5">
+          <BrandMark compact />
+          <p className="text-center text-[11.5px] font-medium leading-[1.5] text-foreground/80">
+            © {new Date().getFullYear()} Bake 'N Love Cafe &amp; Bistro.<br />All rights reserved.
+          </p>
+          <p className="flex items-center gap-2 text-[11.5px] font-semibold">
+            <a href="#contact" className="text-brand underline-offset-2 hover:underline">Privacy Policy</a>
+            <span className="text-brand/40" aria-hidden="true">·</span>
+            <a href="#contact" className="text-brand underline-offset-2 hover:underline">Terms &amp; Conditions</a>
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }
