@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import {
   Armchair,
   ArrowRight,
@@ -115,6 +115,17 @@ const specials = [
 // Example: "919876543210" for +91 98765 43210. Change this one value; the whole site uses it.
 const RESTAURANT_WHATSAPP_NUMBER = "919876543210";
 
+const timeSlots = Array.from({ length: 31 }, (_, index) => {
+  const minutes = 8 * 60 + index * 30;
+  return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
+});
+
+const shortDate = (iso: string) =>
+  new Date(`${iso}T12:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+
+const shortTime = (value: string) =>
+  new Date(`2000-01-01T${value}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+
 const reviews = [
   {
     name: "Ananya Sharma",
@@ -175,6 +186,17 @@ function LeafSprig({ className = "h-20 w-12 text-botanical" }: { className?: str
 function Index() {
   const [booking, setBooking] = useState({ date: "", time: "", guests: "1", name: "", phone: "" });
   const [notice, setNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [dateOptions, setDateOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    const days = Array.from({ length: 30 }, (_, index) => {
+      const day = new Date();
+      day.setHours(12, 0, 0, 0);
+      day.setDate(day.getDate() + index);
+      return day.toISOString().slice(0, 10);
+    });
+    setDateOptions(days);
+  }, []);
 
   const updateBooking =
     (key: keyof typeof booking) =>
@@ -420,28 +442,40 @@ function Index() {
                   <CalendarDays className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
                   <span className="min-w-0 flex-1">
                     <span className="block text-[11px] font-extrabold leading-tight text-foreground">Date</span>
-                    <input
-                      type="date"
-                      required
-                      value={booking.date}
-                      onChange={updateBooking("date")}
-                      aria-label="Select date"
-                      className="w-full bg-transparent text-[11px] font-medium outline-none [color-scheme:light] invalid:text-muted-foreground valid:text-foreground"
-                    />
+                    <span className="relative flex items-center">
+                      <select
+                        value={booking.date}
+                        onChange={updateBooking("date")}
+                        aria-label="Select date"
+                        className={`w-full appearance-none bg-transparent pr-4 text-[11px] font-medium outline-none ${booking.date ? "text-foreground" : "text-muted-foreground"}`}
+                      >
+                        <option value="">Select date</option>
+                        {dateOptions.map((iso) => (
+                          <option key={iso} value={iso}>{shortDate(iso)}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute right-0 size-3 text-muted-foreground" aria-hidden="true" />
+                    </span>
                   </span>
                 </label>
                 <label className="flex min-w-0 items-center gap-1.5 rounded-[0.9rem] border border-brand/25 bg-background px-2.5 py-2 shadow-card">
                   <Clock className="size-4 shrink-0 text-brand" strokeWidth={2.2} aria-hidden="true" />
                   <span className="min-w-0 flex-1">
                     <span className="block text-[11px] font-extrabold leading-tight text-foreground">Time</span>
-                    <input
-                      type="time"
-                      required
-                      value={booking.time}
-                      onChange={updateBooking("time")}
-                      aria-label="Select time"
-                      className="w-full bg-transparent text-[11px] font-medium outline-none [color-scheme:light] invalid:text-muted-foreground valid:text-foreground"
-                    />
+                    <span className="relative flex items-center">
+                      <select
+                        value={booking.time}
+                        onChange={updateBooking("time")}
+                        aria-label="Select time"
+                        className={`w-full appearance-none bg-transparent pr-3.5 text-[10.5px] font-medium outline-none ${booking.time ? "text-foreground" : "text-muted-foreground"}`}
+                      >
+                        <option value="">Select time</option>
+                        {timeSlots.map((slot) => (
+                          <option key={slot} value={slot}>{shortTime(slot)}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute right-0 size-3 text-muted-foreground" aria-hidden="true" />
+                    </span>
                   </span>
                 </label>
                 <label className="flex min-w-0 items-center gap-1.5 rounded-[0.9rem] border border-brand/25 bg-background px-2.5 py-2 shadow-card">
@@ -453,7 +487,7 @@ function Index() {
                         value={booking.guests}
                         onChange={updateBooking("guests")}
                         aria-label="Number of guests"
-                        className="w-full appearance-none bg-transparent text-[11px] font-medium text-foreground outline-none"
+                        className="w-full appearance-none bg-transparent pr-4 text-[11px] font-medium text-foreground outline-none"
                       >
                         {Array.from({ length: 12 }).map((_, index) => (
                           <option key={index + 1} value={index + 1}>
@@ -474,6 +508,7 @@ function Index() {
                     <span className="block text-[11px] font-extrabold leading-tight text-foreground">Your Name</span>
                     <input
                       type="text"
+                      suppressHydrationWarning
                       value={booking.name}
                       onChange={updateBooking("name")}
                       placeholder="Enter your name"
@@ -489,6 +524,7 @@ function Index() {
                     <span className="block text-[11px] font-extrabold leading-tight text-foreground">Phone Number</span>
                     <input
                       type="tel"
+                      suppressHydrationWarning
                       inputMode="tel"
                       value={booking.phone}
                       onChange={updateBooking("phone")}
@@ -580,17 +616,17 @@ function Index() {
             <div className="relative mt-5 grid grid-cols-2 gap-3">
               {reviews.map((review) => (
                 <article key={review.name} className="rounded-[1.1rem] border border-brand/15 bg-background p-3.5 shadow-card">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2">
                     <img
                       src={review.avatar}
                       alt={review.name}
                       width={816}
                       height={816}
                       loading="lazy"
-                      className="size-10 shrink-0 rounded-full object-cover"
+                      className="size-9 shrink-0 rounded-full object-cover"
                     />
                     <div className="min-w-0">
-                      <h3 className="truncate text-[12.5px] font-extrabold leading-tight text-foreground">{review.name}</h3>
+                      <h3 className="text-[11.5px] font-extrabold leading-tight text-foreground">{review.name}</h3>
                       <p className="text-[10.5px] text-muted-foreground">{review.time}</p>
                     </div>
                   </div>
