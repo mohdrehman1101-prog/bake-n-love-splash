@@ -467,7 +467,7 @@ function Index() {
                         value={booking.time}
                         onChange={updateBooking("time")}
                         aria-label="Select time"
-                        className={`w-full appearance-none bg-transparent pr-4 text-[11px] font-medium outline-none ${booking.time ? "text-foreground" : "text-muted-foreground"}`}
+                        className={`w-full appearance-none bg-transparent pr-3.5 text-[10.5px] font-medium outline-none ${booking.time ? "text-foreground" : "text-muted-foreground"}`}
                       >
                         <option value="">Select time</option>
                         {timeSlots.map((slot) => (
