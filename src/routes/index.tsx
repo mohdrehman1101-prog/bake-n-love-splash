@@ -216,6 +216,8 @@ function Index() {
   const [booking, setBooking] = useState({ date: "", time: "", guests: "1", name: "", phone: "" });
   const [notice, setNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [dateOptions, setDateOptions] = useState<string[]>([]);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   useEffect(() => {
     const days = Array.from({ length: 30 }, (_, index) => {
@@ -265,6 +267,17 @@ function Index() {
       type: "success",
       text: "Your booking request is ready on WhatsApp. Please send the message to confirm your reservation.",
     });
+  }
+
+  function handleSubscribe(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const email = newsletterEmail.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setNewsletterStatus({ type: "error", text: "Please enter a valid email address." });
+      return;
+    }
+    setNewsletterStatus({ type: "success", text: "Thank you for subscribing! Sweet updates are on their way." });
+    setNewsletterEmail("");
   }
 
   return (
