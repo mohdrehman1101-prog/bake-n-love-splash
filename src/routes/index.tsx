@@ -463,7 +463,51 @@ function Index() {
         </div>
       </section>
 
+      <section id="gallery" className="bg-background py-10">
+        <div className="px-5 text-center">
+          <span className="inline-flex items-center gap-2 rounded-full bg-story px-4 py-1.5 font-script text-[22px] leading-none text-brand shadow-card">
+            <Camera className="size-3.5" aria-hidden="true" />
+            Moments from our cafe
+          </span>
+          <h2 className="mt-3 font-serif text-[28px] font-bold leading-tight tracking-tight text-foreground">
+            Gallery
+          </h2>
+          <div className="mx-auto mt-3 h-0.5 w-14 rounded-full bg-brand/30" />
+          <p className="mx-auto mt-3 max-w-[300px] text-[13.5px] leading-[1.5] text-muted-foreground">
+            A little peek into our warm kitchen, fresh bakes and cozy corners.
+          </p>
+        </div>
+
+        <div className="mt-6 columns-2 gap-3 px-4">
+          {galleryPhotos.map((photo) => (
+            <figure key={photo.alt} className="mb-3 break-inside-avoid">
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                width={1024}
+                height={1024}
+                loading="lazy"
+                className={`w-full ${photo.ratio} rounded-[1.4rem] border border-border object-cover shadow-card`}
+              />
+            </figure>
+          ))}
+        </div>
+
+        <div className="mt-2 flex justify-center">
+          <Button
+            asChild
+            variant="outline"
+            className="h-11 rounded-full border border-border-strong bg-background px-6 text-[13.5px] font-semibold shadow-card hover:bg-secondary"
+          >
+            <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer">
+              <Instagram /> Follow Us on Instagram
+            </a>
+          </Button>
+        </div>
+      </section>
+
       <section id="signature" className="bg-background py-6">
+
         <div className="mx-4 rounded-[2.25rem] border border-brand/15 bg-story p-4 shadow-card">
           <div className="relative mb-6 overflow-hidden rounded-[1.5rem] bg-white p-2.5 shadow-card">
             <div className="relative h-[260px] overflow-hidden rounded-[1.2rem] bg-secondary">
