@@ -5,6 +5,8 @@ import {
   ArrowRight,
   CakeSlice,
   CalendarDays,
+  Camera,
+
   Check,
   ChevronDown,
   Clock,
@@ -31,7 +33,12 @@ import cookieDoughPieImage from "@/assets/cookie-dough-pie.jpg";
 import ananyaAvatar from "@/assets/avatar-ananya.jpg";
 import rohanAvatar from "@/assets/avatar-rohan.jpg";
 import croissantImage from "@/assets/croissant.jpg";
+import galleryBreadImage from "@/assets/gallery-bread.jpg";
+import galleryBaristaImage from "@/assets/gallery-barista.jpg";
+import galleryDisplayImage from "@/assets/gallery-display.jpg";
+import galleryTableImage from "@/assets/gallery-table.jpg";
 import logoAsset from "@/assets/bake-n-love-logo.png.asset.json";
+
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -115,7 +122,41 @@ const specials = [
   },
 ];
 
+const galleryPhotos = [
+  {
+    src: galleryBreadImage,
+    alt: "Fresh artisan breads stacked on warm wooden bakery shelves",
+    ratio: "aspect-[3/4]",
+  },
+  {
+    src: galleryBaristaImage,
+    alt: "Barista pouring rosetta latte art into a pastel blue cup",
+    ratio: "aspect-square",
+  },
+  {
+    src: galleryDisplayImage,
+    alt: "Pastry display case filled with tarts, macarons and cakes",
+    ratio: "aspect-[4/5]",
+  },
+  {
+    src: interiorImage,
+    alt: "Warm cafe interior with cozy seating and soft light",
+    ratio: "aspect-[3/4]",
+  },
+  {
+    src: galleryTableImage,
+    alt: "Cafe table with cake slice, croissant and cappuccino by the window",
+    ratio: "aspect-[4/5]",
+  },
+  {
+    src: cappuccinoImage,
+    alt: "Cappuccino with delicate latte art",
+    ratio: "aspect-square",
+  },
+];
+
 // ⚙️ BOOKING CONFIG — the restaurant's WhatsApp number, in international format with digits only.
+
 // Example: "919876543210" for +91 98765 43210. Change this one value; the whole site uses it.
 const RESTAURANT_WHATSAPP_NUMBER = "919876543210";
 
@@ -305,7 +346,7 @@ function Index() {
             <BrandMark compact />
             <nav className="mt-10 flex flex-col font-serif text-3xl" aria-label="Main navigation">
               <SheetClose asChild><a href="#top" className="border-b border-border py-5">Home</a></SheetClose>
-              <span aria-disabled="true" className="cursor-default border-b border-border py-5 text-muted-foreground/70">Gallery</span>
+              <SheetClose asChild><a href="#gallery" className="border-b border-border py-5">Gallery</a></SheetClose>
               <span aria-disabled="true" className="cursor-default border-b border-border py-5 text-muted-foreground/70">Menu</span>
               <SheetClose asChild><a href="#about" className="border-b border-border py-5">About</a></SheetClose>
               <span aria-disabled="true" className="cursor-default border-b border-border py-5 text-muted-foreground/70">Contact</span>
