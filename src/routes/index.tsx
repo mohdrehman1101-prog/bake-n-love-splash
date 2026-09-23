@@ -217,7 +217,8 @@ function Index() {
   const [notice, setNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [dateOptions, setDateOptions] = useState<string[]>([]);
   const [newsletterEmail, setNewsletterEmail] = useState("");
-  const [newsletterStatus, setNewsletterStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [newsletterStatus, setNewsletterStatus] = useState<{ type: "success" | "error", text: string } | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const days = Array.from({ length: 30 }, (_, index) => {
