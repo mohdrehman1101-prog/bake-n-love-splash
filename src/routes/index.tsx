@@ -287,20 +287,28 @@ function Index() {
         <a href="#top" aria-label="Bake 'N Love home" className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <BrandMark />
         </a>
-        <Sheet>
+        <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Open navigation" className="h-11 w-11 rounded-full text-foreground hover:bg-secondary">
-              <Menu className="size-7!" strokeWidth={2.2} />
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+              aria-expanded={menuOpen}
+              className="h-11 w-11 rounded-full text-foreground hover:bg-secondary"
+            >
+              <Menu className="size-7! transition-transform duration-300" strokeWidth={2.2} />
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-[82%] border-l border-border bg-background px-8 pt-14">
+          <SheetContent className="w-[82%] border-l border-border bg-background px-8 pt-14 [&>button]:right-6 [&>button]:top-[30px] [&>button]:h-11 [&>button]:w-11 [&>button]:rounded-full [&>button]:opacity-100 [&>button]:transition-transform [&>button]:duration-300 [&>button]:hover:rotate-90 [&>button_svg]:size-7! [&>button_svg]:stroke-[2.2]">
             <SheetTitle className="sr-only">Navigation</SheetTitle>
             <SheetDescription className="sr-only">Browse this page</SheetDescription>
             <BrandMark compact />
             <nav className="mt-10 flex flex-col font-serif text-3xl" aria-label="Main navigation">
               <SheetClose asChild><a href="#top" className="border-b border-border py-5">Home</a></SheetClose>
-              <SheetClose asChild><a href="#specials" className="border-b border-border py-5">Our Specials</a></SheetClose>
-              <SheetClose asChild><a href="#about" className="border-b border-border py-5">Our Story</a></SheetClose>
+              <span aria-disabled="true" className="cursor-default border-b border-border py-5 text-muted-foreground/70">Gallery</span>
+              <span aria-disabled="true" className="cursor-default border-b border-border py-5 text-muted-foreground/70">Menu</span>
+              <SheetClose asChild><a href="#about" className="border-b border-border py-5">About</a></SheetClose>
+              <span aria-disabled="true" className="cursor-default border-b border-border py-5 text-muted-foreground/70">Contact</span>
             </nav>
           </SheetContent>
         </Sheet>
