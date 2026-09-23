@@ -299,7 +299,7 @@ function Index() {
               <Menu className="size-7! transition-transform duration-300" strokeWidth={2.2} />
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-[82%] border-l border-border bg-background px-8 pt-14 [&>button]:right-6 [&>button]:top-[30px] [&>button]:h-11 [&>button]:w-11 [&>button]:rounded-full [&>button]:opacity-100 [&>button]:transition-transform [&>button]:duration-300 [&>button]:hover:rotate-90 [&>button_svg]:size-7! [&>button_svg]:stroke-[2.2]">
+          <SheetContent className="w-[82%] border-l border-border bg-background px-8 pt-14 [&>button]:right-6 [&>button]:top-[30px] [&>button]:h-11 [&>button]:w-11 [&>button]:rounded-full [&>button]:opacity-100 [&>button]:transition-transform [&>button]:duration-300 [&>button]:hover:rotate-90 [&>button]:outline-none! [&>button]:ring-0! [&>button]:focus:outline-none! [&>button]:focus:ring-0! [&>button_svg]:size-7! [&>button_svg]:stroke-[2.2]">
             <SheetTitle className="sr-only">Navigation</SheetTitle>
             <SheetDescription className="sr-only">Browse this page</SheetDescription>
             <BrandMark compact />
