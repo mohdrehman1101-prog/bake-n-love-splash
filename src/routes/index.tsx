@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent, type MouseEvent as ReactMouseEvent } from "react";
 import {
   Armchair,
   ArrowRight,
@@ -42,7 +42,6 @@ import logoAsset from "@/assets/bake-n-love-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetTitle,
@@ -322,7 +321,7 @@ function Index() {
     setNewsletterEmail("");
   }
 
-  function goToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  function goToSection(e: ReactMouseEvent<HTMLAnchorElement>, id: string) {
     e.preventDefault();
     setMenuOpen(false);
     window.setTimeout(() => {
