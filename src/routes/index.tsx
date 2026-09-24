@@ -328,7 +328,6 @@ function Index() {
       const el = document.getElementById(id);
       el?.scrollIntoView({ block: "start" });
       window.setTimeout(() => el?.scrollIntoView({ block: "start" }), 250);
-      window.history.replaceState(null, "", `#${id}`);
     }, 320);
   }
 
