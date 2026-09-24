@@ -323,8 +323,8 @@ function Index() {
   }
 
   return (
-    <main className="mx-auto min-h-screen max-w-[430px] overflow-hidden bg-background text-foreground shadow-shell md:my-6 md:rounded-[44px]">
-      <header className="relative z-20 flex h-[104px] w-full items-center justify-between px-6">
+    <main className="min-h-screen w-full overflow-x-hidden bg-background text-foreground">
+      <header className="relative z-20 flex h-[104px] w-full items-center justify-between px-6 md:px-10 lg:px-[max(2.5rem,calc((100%-1200px)/2))]">
         <a href="#top" aria-label="Bake 'N Love home" className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <BrandMark />
         </a>
@@ -340,7 +340,7 @@ function Index() {
               <Menu className="size-7! transition-transform duration-300" strokeWidth={2.2} />
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-[82%] border-l border-border bg-background px-8 pt-14 [&>button]:right-6 [&>button]:top-[30px] [&>button]:h-11 [&>button]:w-11 [&>button]:rounded-full [&>button]:opacity-100 [&>button]:transition-transform [&>button]:duration-300 [&>button]:hover:rotate-90 [&>button]:outline-none! [&>button]:ring-0! [&>button]:focus:outline-none! [&>button]:focus:ring-0! [&>button_svg]:size-7! [&>button_svg]:stroke-[2.2]">
+          <SheetContent className="w-[82%] sm:max-w-sm border-l border-border bg-background px-8 pt-14 [&>button]:right-6 [&>button]:top-[30px] [&>button]:h-11 [&>button]:w-11 [&>button]:rounded-full [&>button]:opacity-100 [&>button]:transition-transform [&>button]:duration-300 [&>button]:hover:rotate-90 [&>button]:outline-none! [&>button]:ring-0! [&>button]:focus:outline-none! [&>button]:focus:ring-0! [&>button_svg]:size-7! [&>button_svg]:stroke-[2.2]">
             <SheetTitle className="sr-only">Navigation</SheetTitle>
             <SheetDescription className="sr-only">Browse this page</SheetDescription>
             <BrandMark compact />
@@ -355,10 +355,11 @@ function Index() {
         </Sheet>
       </header>
 
-      <section id="top" className="relative h-[380px] w-full overflow-hidden">
+      <section id="top" className="relative h-[380px] w-full overflow-hidden sm:h-[440px] md:h-[520px] lg:h-[600px]">
         <img src={heroImage} alt="Croissant and cappuccino on a sunlit café table" width={912} height={1200} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-[52%_66%]" />
         <div className="absolute inset-0 bg-hero-wash" />
-        <div className="relative px-6 pt-[44px]">
+        <div className="relative px-6 pt-[44px] md:px-10 md:pt-[80px] lg:mx-auto lg:max-w-[1200px] lg:pt-[120px]">
+          <div className="md:max-w-[440px]">
           <p className="font-script text-[31px] leading-none text-script">Welcome to</p>
           <h1 className="mt-2 font-serif text-[43px] font-bold leading-[0.95] text-foreground">Bake 'N Love</h1>
           <p className="mt-3 text-[13px] font-extrabold uppercase tracking-[0.19em] text-brand">Café <span className="text-muted-foreground">&amp; Bistro</span></p>
@@ -373,18 +374,19 @@ function Index() {
               <a href="#about"><MapPin /> Visit Us</a>
             </Button>
           </div>
+          </div>
         </div>
       </section>
 
-      <section id="specials" className="bg-background py-5">
+      <section id="specials" className="bg-background py-5 md:mx-auto md:max-w-[1200px] md:px-6 md:py-10">
         <div className="px-5">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand">Our Specials</p>
           <h2 className="mt-1 font-serif text-[30px] font-bold leading-none">Must Try</h2>
         </div>
-        <div className="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {specials.map((special) => (
-            <article key={special.title} className="w-[145px] shrink-0 snap-start overflow-hidden rounded-card border border-border bg-card shadow-card">
-              <img src={special.image} alt={special.alt} width={880} height={752} loading="lazy" className="h-[112px] w-full object-cover" />
+            <article key={special.title} className="w-[145px] shrink-0 snap-start md:w-auto overflow-hidden rounded-card border border-border bg-card shadow-card">
+              <img src={special.image} alt={special.alt} width={880} height={752} loading="lazy" className="h-[112px] w-full object-cover md:h-[220px] lg:h-[260px]" />
               <div className="min-h-[108px] px-3 py-3">
                 <h3 className="text-[14px] font-extrabold leading-tight">{special.title}</h3>
                 <p className="mt-1.5 text-[13px] leading-[1.4] text-foreground/90">{special.description}</p>
@@ -392,7 +394,7 @@ function Index() {
             </article>
           ))}
         </div>
-        <div className="mt-4 flex justify-center gap-2.5" aria-label="Carousel pagination">
+        <div className="mt-4 flex justify-center gap-2.5 md:hidden" aria-label="Carousel pagination">
           <span className="h-2 w-2 rounded-full bg-brand" />
           <span className="h-2 w-2 rounded-full bg-dot" />
           <span className="h-2 w-2 rounded-full bg-dot" />
@@ -400,7 +402,7 @@ function Index() {
       </section>
 
       <section id="about" className="mt-1 bg-story py-6">
-        <div className="grid grid-cols-[1.12fr_0.88fr] items-end gap-2 px-5">
+        <div className="grid grid-cols-[1.12fr_0.88fr] items-end gap-2 px-5 md:mx-auto md:max-w-[1200px] md:items-center md:gap-10 md:px-10 md:py-6">
           <div className="relative">
             <p className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand">About Us</p>
             <div className="mt-1 flex items-start gap-1">
@@ -415,7 +417,7 @@ function Index() {
             </Button>
           </div>
           <div className="relative w-full">
-            <img src={interiorImage} alt="Warm café interior with teal seating and wooden tables" width={1008} height={800} loading="lazy" className="h-[205px] w-full rounded-photo object-cover shadow-card [clip-path:polygon(18%_0,100%_0,100%_100%,0_100%,0_18%)]" />
+            <img src={interiorImage} alt="Warm café interior with teal seating and wooden tables" width={1008} height={800} loading="lazy" className="h-[205px] w-full rounded-photo md:h-[340px] lg:h-[420px] object-cover shadow-card [clip-path:polygon(18%_0,100%_0,100%_100%,0_100%,0_18%)]" />
             <div className="absolute left-1/2 top-[47%] -translate-x-1/2 -translate-y-1/2 drop-shadow-sm">
               <BrandMark compact />
             </div>
@@ -435,7 +437,7 @@ function Index() {
           <div className="mx-auto mt-3 h-0.5 w-14 rounded-full bg-brand/30" />
         </div>
 
-        <div className="mt-6 flex flex-col gap-4 px-5">
+        <div className="mt-6 flex flex-col gap-4 px-5 md:mx-auto md:grid md:max-w-[1200px] md:grid-cols-2 md:px-10 lg:grid-cols-4">
           {experiences.map((item) => (
             <article
               key={item.number}
@@ -478,7 +480,7 @@ function Index() {
           </p>
         </div>
 
-        <div className="mt-6 columns-2 gap-3 px-4">
+        <div className="mt-6 columns-2 gap-3 px-4 md:mx-auto md:max-w-[1200px] md:columns-3 md:gap-5 md:px-10">
           {galleryPhotos.map((photo) => (
             <figure key={photo.alt} className="mb-3 break-inside-avoid">
               <img
@@ -508,9 +510,9 @@ function Index() {
 
       <section id="signature" className="bg-background py-6">
 
-        <div className="mx-4 rounded-[2.25rem] border border-brand/15 bg-story p-4 shadow-card">
-          <div className="relative mb-6 overflow-hidden rounded-[1.5rem] bg-white p-2.5 shadow-card">
-            <div className="relative h-[260px] overflow-hidden rounded-[1.2rem] bg-secondary">
+        <div className="mx-4 rounded-[2.25rem] border border-brand/15 bg-story p-4 shadow-card md:mx-auto md:grid md:max-w-[1000px] md:grid-cols-2 md:items-center md:gap-8 md:p-6 md:[margin-inline:max(2.5rem,calc((100%-1000px)/2))]">
+          <div className="relative mb-6 overflow-hidden rounded-[1.5rem] bg-white md:mb-0 p-2.5 shadow-card">
+            <div className="relative h-[260px] overflow-hidden rounded-[1.2rem] md:h-[380px] bg-secondary">
               <img
                 src={cookieDoughPieImage}
                 alt="Cookie dough pie with vanilla ice cream and chocolate chips"
@@ -554,7 +556,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="booking" className="bg-background py-6">
+      <section id="booking" className="bg-background py-6 md:px-10 md:[&>*]:mx-auto md:[&>*]:max-w-3xl">
         <div className="mx-4 rounded-[2.25rem] border border-brand/20 bg-story p-2 shadow-card">
           <div className="relative overflow-hidden rounded-[1.9rem] bg-card px-5 pb-7 pt-8">
             <LeafSprig className="absolute -left-1 top-3 h-14 w-8 -rotate-[35deg] text-brand/30" />
@@ -702,7 +704,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="reviews" className="bg-background pb-9 pt-1">
+      <section id="reviews" className="bg-background pb-9 pt-1 md:px-10 md:[&>*]:mx-auto md:[&>*]:max-w-3xl">
         <div className="mx-4 rounded-[2.25rem] border border-brand/20 bg-story p-2 shadow-card">
           <div className="relative overflow-hidden rounded-[1.9rem] bg-card px-5 pb-7 pt-8">
             <LeafSprig className="absolute -left-1 bottom-4 h-14 w-8 rotate-[35deg] text-brand/30" />
@@ -793,7 +795,7 @@ function Index() {
         </div>
       </section>
 
-      <footer id="contact" className="border-t border-brand/20 bg-story pb-8 pt-9">
+      <footer id="contact" className="border-t border-brand/20 bg-story pb-8 pt-9 md:px-10 md:[&>*]:mx-auto md:[&>*]:max-w-3xl">
         <div className="px-5 text-center">
           <p className="flex items-center justify-center gap-2 font-script text-[26px] leading-none text-brand">
             <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
