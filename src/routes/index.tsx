@@ -322,6 +322,15 @@ function Index() {
     setNewsletterEmail("");
   }
 
+  function goToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+    e.preventDefault();
+    setMenuOpen(false);
+    window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ block: "start" });
+      window.history.replaceState(null, "", `#${id}`);
+    }, 320);
+  }
+
   return (
     <main className="min-h-screen w-full overflow-x-hidden bg-background text-foreground">
       <header className="relative z-20 flex h-[104px] w-full items-center justify-between px-6 md:px-10 lg:px-[max(2.5rem,calc((100%-1200px)/2))]">
@@ -345,11 +354,11 @@ function Index() {
             <SheetDescription className="sr-only">Browse this page</SheetDescription>
             <BrandMark compact />
             <nav className="mt-10 flex flex-col font-serif text-3xl" aria-label="Main navigation">
-              <SheetClose asChild><a href="#top" className="border-b border-border py-5">Home</a></SheetClose>
-              <SheetClose asChild><a href="#gallery" className="border-b border-border py-5">Gallery</a></SheetClose>
-              <span aria-disabled="true" className="cursor-default border-b border-border py-5 text-muted-foreground/70">Menu</span>
-              <SheetClose asChild><a href="#about" className="border-b border-border py-5">About</a></SheetClose>
-              <span aria-disabled="true" className="cursor-default border-b border-border py-5 text-muted-foreground/70">Contact</span>
+              <a href="#top" onClick={(e) => goToSection(e, "top")} className="border-b border-border py-5">Home</a>
+              <a href="#gallery" onClick={(e) => goToSection(e, "gallery")} className="border-b border-border py-5">Gallery</a>
+              <a href="#specials" onClick={(e) => goToSection(e, "specials")} className="border-b border-border py-5">Menu</a>
+              <a href="#about" onClick={(e) => goToSection(e, "about")} className="border-b border-border py-5">About</a>
+              <a href="#contact" onClick={(e) => goToSection(e, "contact")} className="border-b border-border py-5">Contact</a>
             </nav>
           </SheetContent>
         </Sheet>
@@ -413,7 +422,7 @@ function Index() {
               Bake 'N Love was born from a simple idea — that good food brings people together. We serve freshly baked treats, aromatic coffee and wholesome meals in a cozy, welcoming space.
             </p>
             <Button asChild className="mt-4 h-10 rounded-full bg-brand px-5 text-sm font-medium text-primary-foreground shadow-none hover:bg-brand-strong">
-              <a href="#top">Our Story <ArrowRight /></a>
+              <a href="#experience">Our Story <ArrowRight /></a>
             </Button>
           </div>
           <div className="relative w-full">
