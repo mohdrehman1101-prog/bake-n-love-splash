@@ -325,7 +325,9 @@ function Index() {
     e.preventDefault();
     setMenuOpen(false);
     window.setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ block: "start" });
+      const el = document.getElementById(id);
+      el?.scrollIntoView({ block: "start" });
+      window.setTimeout(() => el?.scrollIntoView({ block: "start" }), 250);
       window.history.replaceState(null, "", `#${id}`);
     }, 320);
   }
