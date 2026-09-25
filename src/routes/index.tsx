@@ -559,7 +559,7 @@ function Index() {
             </div>
 
             <Button asChild className="mt-6 h-[44px] rounded-full bg-brand px-8 text-[14px] font-semibold text-primary-foreground shadow-none hover:bg-brand-strong">
-              <a href="#specials">View Full Menu <ArrowRight /></a>
+              <a href="#specials" onClick={(e) => goToSection(e, "specials")}>View Full Menu <ArrowRight /></a>
             </Button>
           </div>
         </div>
