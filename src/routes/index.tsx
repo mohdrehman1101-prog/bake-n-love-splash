@@ -366,7 +366,6 @@ function Index() {
 
       <section id="top" className="relative h-[380px] w-full overflow-hidden sm:h-[440px] md:h-[520px] lg:h-[600px]">
         <video src="/hero-video.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover object-[52%_66%]" />
-        <div className="absolute inset-0 bg-hero-wash" />
         <div className="relative px-6 pt-[44px] md:px-10 md:pt-[80px] lg:mx-auto lg:max-w-[1200px] lg:pt-[120px]">
           <div className="md:max-w-[440px]">
           <p className="font-script text-[31px] leading-none text-script">Welcome to</p>
