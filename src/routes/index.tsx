@@ -234,7 +234,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <img
-      src={logoAsset.url}
+      src="/logo.png"
       alt="Bake 'N Love Cafe and Bistro"
       width={720}
       height={610}
