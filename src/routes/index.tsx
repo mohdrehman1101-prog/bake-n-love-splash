@@ -376,10 +376,10 @@ function Index() {
           </p>
           <div className="mt-4 grid grid-cols-[minmax(0,1.14fr)_minmax(0,0.86fr)] gap-3">
             <Button asChild className="h-[44px] rounded-full bg-brand px-5 text-[14px] font-medium text-primary-foreground shadow-none hover:bg-brand-strong">
-              <a href="#specials">Explore Menu <ArrowRight /></a>
+              <a href="#specials" onClick={(e) => goToSection(e, "specials")}>Explore Menu <ArrowRight /></a>
             </Button>
             <Button asChild variant="outline" className="h-[44px] rounded-full border border-border-strong bg-background/95 px-4 text-[14px] font-medium shadow-none hover:bg-secondary">
-              <a href="#about"><MapPin /> Visit Us</a>
+              <a href="#about" onClick={(e) => goToSection(e, "about")}><MapPin /> Visit Us</a>
             </Button>
           </div>
           </div>
@@ -421,7 +421,7 @@ function Index() {
               Bake 'N Love was born from a simple idea — that good food brings people together. We serve freshly baked treats, aromatic coffee and wholesome meals in a cozy, welcoming space.
             </p>
             <Button asChild className="mt-4 h-10 rounded-full bg-brand px-5 text-sm font-medium text-primary-foreground shadow-none hover:bg-brand-strong">
-              <a href="#experience">Our Story <ArrowRight /></a>
+              <a href="#experience" onClick={(e) => goToSection(e, "experience")}>Our Story <ArrowRight /></a>
             </Button>
           </div>
           <div className="relative w-full">
