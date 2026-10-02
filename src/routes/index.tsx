@@ -261,6 +261,22 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    const els = Array.from(document.querySelectorAll<HTMLElement>("main > section:not(#top) > *, main > footer > *"));
+    if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    els.forEach((el, i) => {
+      el.classList.add("reveal");
+      el.style.transitionDelay = `${(i % 3) * 90}ms`;
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) { en.target.classList.add("is-visible"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
     const days = Array.from({ length: 30 }, (_, index) => {
       const day = new Date();
       day.setHours(12, 0, 0, 0);
@@ -386,7 +402,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="specials" className="bg-background py-5 md:mx-auto md:max-w-[1200px] md:px-6 md:py-10">
+      <section id="specials" className="bg-background py-10 md:mx-auto md:max-w-[1200px] md:px-6 md:py-16">
         <div className="px-5">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand">Our Specials</p>
           <h2 className="mt-1 font-serif text-[30px] font-bold leading-none">Must Try</h2>
@@ -409,7 +425,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="about" className="mt-1 bg-story py-6">
+      <section id="about" className="mt-2 bg-story py-12 md:py-16">
         <div className="grid grid-cols-[1.12fr_0.88fr] items-end gap-2 px-5 md:mx-auto md:max-w-[1200px] md:items-center md:gap-10 md:px-10 md:py-6">
           <div className="relative">
             <p className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand">About Us</p>
@@ -433,7 +449,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="experience" className="bg-background py-10">
+      <section id="experience" className="bg-background py-14 md:py-20">
         <div className="px-5 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-story px-4 py-1.5 font-script text-[22px] leading-none text-brand shadow-card">
             <Heart className="size-3 fill-current" aria-hidden="true" />
@@ -473,7 +489,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="gallery" className="bg-background py-10">
+      <section id="gallery" className="bg-background py-14 md:py-20">
         <div className="px-5 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-story px-4 py-1.5 font-script text-[22px] leading-none text-brand shadow-card">
             <Camera className="size-3.5" aria-hidden="true" />
@@ -516,7 +532,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="signature" className="bg-background py-6">
+      <section id="signature" className="bg-background py-10 md:py-16">
 
         <div className="mx-4 rounded-[2.25rem] border border-brand/15 bg-story p-4 shadow-card md:mx-auto md:grid md:max-w-[1000px] md:grid-cols-2 md:items-center md:gap-8 md:p-6 md:[margin-inline:max(2.5rem,calc((100%-1000px)/2))]">
           <div className="relative mb-6 overflow-hidden rounded-[1.5rem] bg-white md:mb-0 p-2.5 shadow-card">
@@ -564,7 +580,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="booking" className="bg-background py-6 md:px-10 md:[&>*]:mx-auto md:[&>*]:max-w-3xl">
+      <section id="booking" className="bg-background py-10 md:py-14 md:px-10 md:[&>*]:mx-auto md:[&>*]:max-w-3xl">
         <div className="mx-4 rounded-[2.25rem] border border-brand/20 bg-story p-2 shadow-card">
           <div className="relative overflow-hidden rounded-[1.9rem] bg-card px-5 pb-7 pt-8">
             <LeafSprig className="absolute -left-1 top-3 h-14 w-8 -rotate-[35deg] text-brand/30" />
@@ -712,7 +728,7 @@ function Index() {
         </div>
       </section>
 
-      <section id="reviews" className="bg-background pb-9 pt-1 md:px-10 md:[&>*]:mx-auto md:[&>*]:max-w-3xl">
+      <section id="reviews" className="bg-background pb-14 pt-4 md:pb-20 md:px-10 md:[&>*]:mx-auto md:[&>*]:max-w-3xl">
         <div className="mx-4 rounded-[2.25rem] border border-brand/20 bg-story p-2 shadow-card">
           <div className="relative overflow-hidden rounded-[1.9rem] bg-card px-5 pb-7 pt-8">
             <LeafSprig className="absolute -left-1 bottom-4 h-14 w-8 rotate-[35deg] text-brand/30" />
@@ -803,7 +819,7 @@ function Index() {
         </div>
       </section>
 
-      <footer id="contact" className="border-t border-brand/20 bg-story pb-8 pt-9 md:px-10 md:[&>*]:mx-auto md:[&>*]:max-w-3xl">
+      <footer id="contact" className="border-t border-brand/20 bg-story pb-10 pt-12 md:pt-16 md:px-10 md:[&>*]:mx-auto md:[&>*]:max-w-3xl">
         <div className="px-5 text-center">
           <p className="flex items-center justify-center gap-2 font-script text-[26px] leading-none text-brand">
             <span className="h-px w-5 rounded-full bg-brand/40" aria-hidden="true" />
